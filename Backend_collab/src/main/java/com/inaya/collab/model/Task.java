@@ -19,7 +19,10 @@ public class Task {
     private String description;
     private String dateCreation;
     private String dateLimit;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
+
     private String priority;
 
     @JoinColumn(name = "dashboard_id")

@@ -1,27 +1,70 @@
 package com.inaya.collab.controller;
 
+import com.inaya.collab.exceptions.EntityNotFoundException;
 import com.inaya.collab.model.User;
 import com.inaya.collab.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public class UserController {
 
-    @Autowired
+@RestController
+@RequestMapping("/api/members")
+public class MemberController {
+
     private final UserService userService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    public MemberController(UserService userService) {
         this.userService = userService;
     }
 
-    // Get all members
-    @GetMapping(path = "/all")
-    public ResponseEntity<List<User>> getAllMembers() {
-        List<User> appointments = userService.getAllMembers();
-        return new ResponseEntity<>(appointments, HttpStatus.OK);
+    @PostMapping
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        try {
+            User createdUser = userService.createUser(user);
+            return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable Long userId) {
+        try {
+            User user = userService.getUserById(userId);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<User> updateUser(@RequestBody User updatedUser) {
+        try {
+            User user = userService.updateUser(updatedUser);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+        try {
+            userService.deleteUser(userId);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

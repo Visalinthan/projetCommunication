@@ -1,2 +1,7 @@
-package com.inaya.collab.model;public enum TaskStatus {
+package com.inaya.collab.model;
+
+public enum TaskStatus {
+    PENDING,
+    IN_PROGRESS,
+    COMPLETED
 }
