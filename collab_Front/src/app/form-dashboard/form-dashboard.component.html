@@ -1,0 +1,26 @@
+<div class="taskForm row my-5 g-3 align-items-center text-center">
+  <form [formGroup]="taskForm" (ngSubmit)="addDashboard()">
+    <div class="mb-3">
+      <input type="text" class="form-control" id="name" name="name" formControlName="name" placeholder="name" required>
+    </div>
+
+    <div class="mb-3">
+      <mat-form-field>
+        <mat-label>Member for dashboard</mat-label>
+        <mat-select id="members" name="members" formControlName="members" multiple>
+          @for (member of allMembers; track member) {
+          <mat-option [value]="member.id">{{member.firstName}} {{member.lastName}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <!--<select class="form-select" id="user" name="user" formControlName="user" aria-placeholder="user" required
+        multiple>
+        <option value="" selected>Member for dashboard</option>
+        <option *ngFor="let member of members" [value]="member.id">{{member.firstName}} {{member.lastName}}</option>
+      </select>-->
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Dashboard</button>
+  </form>
+</div>

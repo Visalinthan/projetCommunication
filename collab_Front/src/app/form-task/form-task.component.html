@@ -1,0 +1,41 @@
+<div class="taskForm row my-5 g-3 align-items-center text-center">
+  <form [formGroup]="taskForm" (ngSubmit)="addTask()">
+    <div class="mb-3">
+      <input type="text" class="form-control" id="title" name="title" formControlName="title" placeholder="title"
+        required>
+    </div>
+    <div class="mb-3">
+      <textarea class="form-control" id="description" name="description" formControlName="description"
+        placeholder="description" required></textarea>
+    </div>
+    <div class="mb-3">
+      <select class="form-select" id="status" formControlName="status">
+        <option *ngFor="let status of taskStatus" [value]="status">{{ status }}</option>
+      </select>
+    </div>
+    <div class="mb-3">
+
+      <select class="form-select" id="priority" name="priority" formControlName="priority" aria-placeholder="Priority"
+        required>
+        <option value="" selected>Select priority of task</option>
+        <option value="faible">Faible</option>
+        <option value="moyen">Moyen</option>
+        <option value="elevee">Elevée</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <input type="date" class="form-control" id="dateLimit" name="dateLimit" formControlName="dateLimit"
+        placeholder="dateLimit" required>
+    </div>
+
+    <div class="mb-3">
+      <select class="form-select" id="user" name="user" formControlName="user" aria-placeholder="user" required>
+        <option value="" selected>Select member for assign Task</option>
+        <option *ngFor="let member of members" [value]="member.id">{{member.firstName}} {{member.lastName}}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Task</button>
+  </form>
+</div>

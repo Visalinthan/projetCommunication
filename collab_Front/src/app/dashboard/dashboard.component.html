@@ -1,0 +1,102 @@
+<button type="button" class="btn btn-primary my-5" (click)="addDashboardForm()">Add Dashboard</button>
+<mat-tab-group>
+
+  <mat-tab *ngFor="let dash of dashboard" label={{dash.name}} (selectedTabChange)="changeDashboard(dash.id)">
+    <div class="mx-auto my-5 text-center">
+      <div class="example-container">
+        <h2>To do</h2>
+
+        <div cdkDropList #todoList="cdkDropList" [cdkDropListData]="todo"
+          [cdkDropListConnectedTo]="[doneList,inProgressList]" class="example-list" (cdkDropListDropped)="drop($event)">
+          <div *ngFor="let item of todo; let i = index" class="example-box" cdkDrag [id]="item.id">
+            <div class="accordion" [attr.id]="'accordionExample-0' + i">
+              <div class="accordion-item">
+                <h2 class="accordion-header" [attr.id]="'headingOne-' + i">
+                  <button class="accordion-button" type="button" [attr.data-bs-toggle]="'collapse'"
+                    [attr.data-bs-target]="'#collapseOne-0' + i" aria-expanded="true"
+                    [attr.aria-controls]="'collapseOne-0' + i">
+                    {{item.title}}
+                  </button>
+                </h2>
+                <div [attr.id]="'collapseOne-0' + i" class="accordion-collapse collapse show"
+                  [attr.aria-labelledby]="'headingOne-0' + i" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <p> Description : {{item.description}}</p>
+                    <p> Priorité : {{item.priority}}</p>
+                    <small> Date limite : {{item.dateLimit}} </small>
+                    <small> Date de création : {{item.dateCreation}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary my-5" (click)="addTaskForm()">Add Task</button>
+        </div>
+      </div>
+
+      <div class="example-container">
+        <h2>In Progress</h2>
+        <div cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="progress"
+          [cdkDropListConnectedTo]="[todoList, doneList]" class="example-list" (cdkDropListDropped)="drop($event)">
+
+          <div *ngFor="let item of progress; let i = index" class="example-box" cdkDrag>
+            <div class="accordion" [attr.id]="'accordionExample-1' + i">
+              <div class="accordion-item">
+                <h2 class="accordion-header" [attr.id]="'headingOne-1' + i">
+                  <button class="accordion-button" type="button" [attr.data-bs-toggle]="'collapse'"
+                    [attr.data-bs-target]="'#collapseOne-1' + i" aria-expanded="true"
+                    [attr.aria-controls]="'collapseOne-1' + i">
+                    {{item.title}}
+                  </button>
+                </h2>
+                <div [attr.id]="'collapseOne-1' + i" class="accordion-collapse collapse show"
+                  [attr.aria-labelledby]="'headingOne-1' + i" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <p> Description : {{item.description}}</p>
+                    <p> Priorité : {{item.priority}}</p>
+                    <small> Date limite : {{item.dateLimit}} </small>
+                    <small> Date de création : {{item.dateCreation}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary my-5" (click)="addTaskForm()">Add Task</button>
+        </div>
+      </div>
+
+      <div class="example-container">
+        <h2>Done</h2>
+        <div cdkDropList #doneList="cdkDropList" [cdkDropListData]="done"
+          [cdkDropListConnectedTo]="[todoList, inProgressList]" class="example-list"
+          (cdkDropListDropped)="drop($event)">
+
+          <div *ngFor="let item of done; let i = index" class="example-box" cdkDrag>
+            <div class="accordion" [attr.id]="'accordionExample-2' + i">
+              <div class="accordion-item">
+                <h2 class="accordion-header" [attr.id]="'headingOne-2' + i">
+                  <button class="accordion-button" type="button" [attr.data-bs-toggle]="'collapse'"
+                    [attr.data-bs-target]="'#collapseOne-2' + i" aria-expanded="true"
+                    [attr.aria-controls]="'collapseOne-2' + i">
+                    {{item.title}}
+                  </button>
+                </h2>
+                <div [attr.id]="'collapseOne-2' + i" class="accordion-collapse collapse show"
+                  [attr.aria-labelledby]="'headingOne-2' + i" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    <p> Description : {{item.description}}</p>
+                    <p> Priorité : {{item.priority}}</p>
+                    <small> Date limite : {{item.dateLimit}} </small>
+                    <small> Date de création : {{item.dateCreation}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary my-5" (click)="addTaskForm()">Add Task</button>
+        </div>
+      </div>
+
+    </div>
+  </mat-tab>
+</mat-tab-group>
