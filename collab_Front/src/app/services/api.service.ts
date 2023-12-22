@@ -53,8 +53,7 @@ export class ApiService {
     );
   }
 
-  updateStatusTask(taskId: any, status: string): Observable<any> {
-    //alert(status)
-    return this.http.post(`${this.apiUrl}/tasks/status/${taskId}`, status);
+  updateStatusTask(taskId: any, status: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/tasks/status/${taskId}`, status)
   }
 }

@@ -1,7 +1,7 @@
 <button type="button" class="btn btn-primary my-5" (click)="addDashboardForm()">Add Dashboard</button>
 <mat-tab-group>
 
-  <mat-tab *ngFor="let dash of dashboard" label={{dash.name}} (selectedTabChange)="changeDashboard(dash.id)">
+  <mat-tab *ngFor="let dash of dashboard" label={{dash.name}} (change)="changeDashboard(dash.id)">
     <div class="mx-auto my-5 text-center">
       <div class="example-container">
         <h2>To do</h2>

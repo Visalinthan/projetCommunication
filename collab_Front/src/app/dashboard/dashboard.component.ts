@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 import { Router } from '@angular/router';
+import { TaskStatus } from '../model/TaskStatus';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,9 +40,10 @@ export class DashboardComponent implements OnInit {
 
     this.apiService.getDashboardByUser(this.currentUserId).subscribe(
       data => data.forEach((element: any) => {
-        if (element[0] != null) {
+        if (element != null) {
           localStorage.setItem('dashboardId', element.id);
         }
+
         this.dashboard.push(element);
       })
     );
@@ -50,10 +52,13 @@ export class DashboardComponent implements OnInit {
       data.forEach((el: any) => {
 
         if (el.status == "PENDING") {
+          this.todo = []
           this.todo.push(el)
         } else if (el.status == "IN_PROGRESS") {
+          this.progress = []
           this.progress.push(el)
         } else if (el.status == "COMPLETED") {
+          this.done = []
           this.done.push(el)
         }
       })
@@ -61,7 +66,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  changeDashboard(id: any){
+  changeDashboard(id: any) {
     alert(id);
     localStorage.setItem('dashboardId', id);
   }
@@ -75,12 +80,19 @@ export class DashboardComponent implements OnInit {
   }
 
   updateStatus(taskId: any, columnId: any) {
+
     if (columnId == "cdk-drop-list-0") {
-      this.apiService.updateStatusTask(taskId, "PENDING")
+      this.apiService.updateStatusTask(taskId, TaskStatus.PENDING).subscribe((res) => {
+        console.log(res)
+      })
     } else if (columnId == "cdk-drop-list-1") {
-      this.apiService.updateStatusTask(taskId, "IN_PROGRESS")
+      this.apiService.updateStatusTask(taskId, TaskStatus.IN_PROGRESS).subscribe((res) => {
+        console.log(res)
+      })
     } else if (columnId == "cdk-drop-list-2") {
-      this.apiService.updateStatusTask(taskId, "COMPLETED")
+      this.apiService.updateStatusTask(taskId, TaskStatus.COMPLETED).subscribe((res) => {
+        console.log(res)
+      })
     }
 
   }
@@ -97,8 +109,9 @@ export class DashboardComponent implements OnInit {
         event.currentIndex,
       );
 
-      event.container.data.forEach((element:any) => {
+      event.container.data.forEach((element: any) => {
         const taskId = element.id;
+
         this.updateStatus(taskId, event.container.id);
       });
 
